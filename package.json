@@ -1,0 +1,25 @@
+{
+  "name": "url-query-manager",
+  "version": "1.0.0",
+  "description": "A tool that helps manage url params from different application modules separately and safe",
+  "main": "index.js",
+  "scripts": {
+    "build" : "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "url",
+    "library",
+    "query",
+    "params",
+    "tool",
+    "helper",
+    "modules",
+    "manager"
+  ],
+  "author": "Alex Chirkin",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
