@@ -6,15 +6,17 @@ describe('Static methods', () => {
     const name2 = 'test2';
     const module1 = new UrlQueryManager(name1);
     const module2 = new UrlQueryManager(name2);
+    const param1 = {id: 1};
+    const param2 = {name: 'alex'};
     
-    module1.push({id: 1});
-    module2.push({name: 'alex'});
+    module1.push(param1);
+    module2.push(param2);
     
     const data = UrlQueryManager.getAllQueryParams();
     
     expect(data).toMatchObject({
-      id: 1,
-      name: 'alex'
+      ...param1,
+      ...param2
     });
   });
   
