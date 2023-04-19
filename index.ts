@@ -1,22 +1,24 @@
 import queryString from 'query-string';
 
-import { Dictionary, Value } from "./types";
+import { Dictionary, Module, Value } from "./types";
 
-const modules: Dictionary<Dictionary<Value>> = {};
+const modules: Dictionary<Module> = {};
 
 export class UrlQueryManager {
   name = '';
-  usePrefix = false;
   deleted = false;
 
 //  Get params for all modules
-  static getAllQueryParams(): Dictionary<string> {
-    let params = {};
+  static getAllQueryParams(): Dictionary<Value> {
+    let params: Dictionary<Value> = {};
     Object.values(modules).forEach(item => {
-      params = {
-        ...params,
-        ...item
-      };
+      Object.entries(item.params).forEach(param => {
+        let [key, value] = param;
+        if(item.prefix) {
+          key = `${item.prefix}_${key}`
+        }
+        params[key] = value
+      })
     });
 
     return params;
@@ -24,40 +26,41 @@ export class UrlQueryManager {
 
 //  Get complete query string with params from all modules
   static getQueryString() {
-    const params = this.getAllQueryParams()
-    return queryString.stringify(params)
+    const params = this.getAllQueryParams();
+    return queryString.stringify(params);
   }
 
-//  Apply all params query string to URL
-  static applyAll() {
-
-  }
-
-  static getModules(){
+  static getModulesList() {
     return Object.keys(modules);
+  }
+
+  //  Apply module query params string to URL
+  static applyQuery() {
+    const queryString = this.getQueryString();
+    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}`;
+    window.history.pushState({path:newUrl}, '', newUrl);
   }
 
   constructor(name: string, usePrefix: boolean = false) {
     this.name = name;
-    this.usePrefix = usePrefix;
     if(!modules[name]) {
-      modules[name] = {};
+      modules[name] = {
+        prefix: usePrefix ? name : '',
+        params: {}
+      };
     }
-  }
-
-//  Apply module query params string to URL
-  apply() {
-
   }
 
 //  Push params set to module
   push(params: Dictionary<Value>) {
-    modules[this.name] = {...params}
+    modules[this.name].params = {
+      ...params
+    };
   }
 
 //  Get current params for module
   getQueryParams() {
-    return modules[this.name]
+    return {...modules[this.name].params}
   }
 
 //  Unsubscribe modules

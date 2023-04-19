@@ -13,7 +13,15 @@
     "types": "./index.d.ts",
     "default": "./index.js"
   },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "types.d.ts",
+    "types.js"
+  ],
   "keywords": [
+    "browser",
+    "querystring",
     "url",
     "library",
     "query",
