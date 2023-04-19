@@ -43,8 +43,28 @@ describe('Initialization', () => {
 
       const data2 = module2.getQueryParams();
       expect(data2).toMatchObject({});
+    });
+
+    test('destroy module', () => {
+      const moduleName = 'module1';
+      const module2Name = 'module2';
+
+      const module1 = new UrlQueryManager(moduleName);
+      const module2 = new UrlQueryManager(module2Name);
+      const param = {user: 'Alex'};
+
+      module1.push(param);
+      module1.destroy();
+
+      const data = UrlQueryManager.getAllQueryParams();
+
+      expect(data).not.toMatchObject(param);
+
+      const modules = UrlQueryManager.getModules();
+
+      expect(modules).toContain(module2Name);
+      expect(modules).not.toContain(moduleName);
+      expect(module1.deleted).toBe(true);
     })
-
-
   })
 })
