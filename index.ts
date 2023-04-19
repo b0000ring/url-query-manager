@@ -33,6 +33,10 @@ export class UrlQueryManager {
 
   }
 
+  static getModules(){
+    return Object.keys(modules);
+  }
+
   constructor(name: string, usePrefix: boolean = false) {
     this.name = name;
     this.usePrefix = usePrefix;
