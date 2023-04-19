@@ -1,7 +1,13 @@
 {
+  "preset": "ts-jest/presets/default-esm",
+  "testEnvironment": "jest-environment-node",
   "transform": {
-    "^.+\\.(t|j)sx?$": "ts-jest"
+    "^.+\\.tsx?$": ["ts-jest", {
+      "tsconfig": "tsconfig.json",
+      "useESM": true
+    }]
   },
+  "moduleDirectories": ["node_modules"],
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
 }
