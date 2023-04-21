@@ -5,7 +5,7 @@ import { Dictionary, Module, Value } from "./types";
 const modules: Dictionary<Module> = {};
 
 export class UrlQueryManager {
-  name = '';
+  _name = '';
   deleted = false;
 
 //  Get params for all modules
@@ -42,7 +42,7 @@ export class UrlQueryManager {
   }
 
   constructor(name: string, usePrefix: boolean = false) {
-    this.name = name;
+    this._name = name;
     if(!modules[name]) {
       modules[name] = {
         prefix: usePrefix ? name : '',
@@ -51,16 +51,49 @@ export class UrlQueryManager {
     }
   }
 
+  get name() {
+    return this._name;
+  }
+
+  @checkAvailability
+  isParamAvailable(key: string): Boolean {
+    const allParams = UrlQueryManager.getAllQueryParams();
+    const moduleParams = modules[this.name].params;
+
+    const allParamsKeys = Object.keys(allParams);
+    const moduleKeys = Object.keys(moduleParams);
+
+    return !(!moduleKeys.includes(key) && allParamsKeys.includes(key));
+  }
+
 //  Push params set to module
-  push(params: Dictionary<Value>) {
+  @checkAvailability
+  push(params: Dictionary<Value>, force: boolean = false) {
+    let finalParams: Dictionary<Value> = {};
+
+    if(force || modules[this.name].prefix) {
+      finalParams = params;
+    } else {
+//    ignore params that exists in other modules
+      Object.keys(params)
+        .filter(key => this.isParamAvailable(key))
+        .forEach(key => finalParams[key] = params[key])
+    }
+
     modules[this.name].params = {
-      ...params
+      ...finalParams
     };
   }
 
 //  Get current params for module
+  @checkAvailability
   getQueryParams() {
-    return {...modules[this.name].params}
+    return {...modules[this.name].params};
+  }
+
+//  Get module params parsed from query if module uses prefix
+  parse() {
+
   }
 
 //  Unsubscribe modules
@@ -68,6 +101,21 @@ export class UrlQueryManager {
     this.deleted = true;
     delete modules[this.name];
   }
+}
+
+//TODO set proper descriptor type
+function checkAvailability(target: UrlQueryManager, propertyKey: keyof UrlQueryManager, descriptor: Dictionary<any>) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = function(...args: any[]) {
+    if (!modules[this.name]) {
+      return undefined;
+    } else {
+      return originalMethod.apply(this, args);
+    }
+  };
+
+  return descriptor;
 }
 
 export default UrlQueryManager
