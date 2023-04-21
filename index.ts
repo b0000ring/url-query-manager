@@ -6,7 +6,6 @@ const modules: Dictionary<Module> = {};
 
 export class UrlQueryManager {
   _name = '';
-  deleted = false;
 
 //  Get params for all modules
   static getAllQueryParams(): Dictionary<Value> {
@@ -55,6 +54,10 @@ export class UrlQueryManager {
     return this._name;
   }
 
+  get deleted() {
+    return !modules[this.name];
+  }
+
   @checkAvailability
   isParamAvailable(key: string): Boolean {
     const allParams = UrlQueryManager.getAllQueryParams();
@@ -98,7 +101,6 @@ export class UrlQueryManager {
 
 //  Unsubscribe modules
   destroy() {
-    this.deleted = true;
     delete modules[this.name];
   }
 }
@@ -108,7 +110,7 @@ function checkAvailability(target: UrlQueryManager, propertyKey: keyof UrlQueryM
   const originalMethod = descriptor.value;
 
   descriptor.value = function(...args: any[]) {
-    if (!modules[this.name]) {
+    if (this.deleted) {
       return undefined;
     } else {
       return originalMethod.apply(this, args);
