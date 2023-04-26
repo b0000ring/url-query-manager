@@ -93,8 +93,8 @@ describe('Static methods', () => {
       expect(queryString).toBe('id=1&name=alex&test2_isAdmin=true')
 
       module.destroy();
-        module2.destroy();
-      });
+      module2.destroy();
+    });
   })
 
   describe('getModulesList', () => {
