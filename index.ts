@@ -4,10 +4,15 @@ import { Dictionary, Module, Value } from "./types";
 
 const modules: Dictionary<Module> = {};
 
+/*
+  A class for manipulating URL parameters from different modules
+*/
 export class UrlQueryManager {
   _name = '';
 
-//  Get params for all modules
+  /*
+    Returns all params from all modules (with applied prefix if module has it)
+  */
   static getAllQueryParams(): Dictionary<Value> {
     let params: Dictionary<Value> = {};
     Object.values(modules).forEach(item => {
@@ -23,23 +28,35 @@ export class UrlQueryManager {
     return params;
   }
 
-//  Get complete query string with params from all modules
+  /*
+    Returns query string with applied params from all modules (with applied prefix if module has it)
+  */
   static getQueryString() {
     const params = this.getAllQueryParams();
     return queryString.stringify(params);
   }
 
+  /*
+    Returns list of all modules names
+  */
   static getModulesList() {
     return Object.keys(modules);
   }
 
-  //  Apply module query params string to URL
+  /*
+    Applies query string through window.history.pushState
+  */
   static applyQuery() {
     const queryString = this.getQueryString();
     const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${queryString}`;
     window.history.pushState({path:newUrl}, '', newUrl);
   }
 
+  /*
+    Creates an object that represents a module which wants to manipulate URL query params
+    @param name module name
+    @param usePrefix if true applies module name as prefix to all the params
+  */
   constructor(name: string, usePrefix: boolean = false) {
     this._name = name;
     if(!modules[name]) {
@@ -58,6 +75,10 @@ export class UrlQueryManager {
     return !modules[this.name];
   }
 
+  /*
+    Checks for availability of specific param by name
+    @param key param name to check
+  */
   @checkAvailability
   isParamAvailable(key: string): Boolean {
     let found = false;
@@ -72,7 +93,10 @@ export class UrlQueryManager {
     return !found;
   }
 
-//  Push params set to module
+  /*
+    Pushes params to module params collection (overwrites all previous params in the module)
+    @param params object with params where key is param name, and value is param value
+  */
   @checkAvailability
   push(params: Dictionary<Value>) {
     let finalParams: Dictionary<Value> = {};
@@ -91,13 +115,17 @@ export class UrlQueryManager {
     };
   }
 
-//  Get current params for module
+  /*
+    Returns params applied to the module
+  */
   @checkAvailability
   getQueryParams() {
     return {...modules[this.name].params};
   }
 
-//  Unsubscribe modules
+  /*
+    Destroying module (removing all the params and prevents from future updates)
+  */
   destroy() {
     delete modules[this.name];
   }
