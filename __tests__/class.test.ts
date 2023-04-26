@@ -48,7 +48,7 @@ describe('Static methods', () => {
 
       const data = UrlQueryManager.getAllQueryParams();
 
-      expect(data).toMatchObject({
+      expect(data).toEqual({
         ...param1,
         ...param2
       });
@@ -70,7 +70,7 @@ describe('Static methods', () => {
 
       const data = UrlQueryManager.getAllQueryParams();
 
-      expect(data).toMatchObject({
+      expect(data).toEqual({
         ...{[name1 + '_id']: 1},
         ...param2
       });
@@ -105,7 +105,7 @@ describe('Static methods', () => {
       const module2 = new UrlQueryManager(name2);
       const list = UrlQueryManager.getModulesList();
 
-      expect(list).toMatchObject([name1, name2]);
+      expect(list).toEqual([name1, name2]);
 
       module.destroy();
       module2.destroy();

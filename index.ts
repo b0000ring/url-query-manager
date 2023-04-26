@@ -60,21 +60,24 @@ export class UrlQueryManager {
 
   @checkAvailability
   isParamAvailable(key: string): Boolean {
-    const allParams = UrlQueryManager.getAllQueryParams();
-    const moduleParams = modules[this.name].params;
+    let found = false;
+    Object.entries(modules).forEach(module => {
+      const [name, data] = module;
 
-    const allParamsKeys = Object.keys(allParams);
-    const moduleKeys = Object.keys(moduleParams);
+      if(name !== this.name && !data.prefix && Object.keys(data.params).find(name => name === key)) {
+        found = true;
+      }
+    })
 
-    return !(!moduleKeys.includes(key) && allParamsKeys.includes(key));
+    return !found;
   }
 
 //  Push params set to module
   @checkAvailability
-  push(params: Dictionary<Value>, force: boolean = false) {
+  push(params: Dictionary<Value>) {
     let finalParams: Dictionary<Value> = {};
 
-    if(force || modules[this.name].prefix) {
+    if(modules[this.name].prefix) {
       finalParams = params;
     } else {
 //    ignore params that exists in other modules
@@ -92,11 +95,6 @@ export class UrlQueryManager {
   @checkAvailability
   getQueryParams() {
     return {...modules[this.name].params};
-  }
-
-//  Get module params parsed from query if module uses prefix
-  parse() {
-
   }
 
 //  Unsubscribe modules
