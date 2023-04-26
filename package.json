@@ -17,6 +17,7 @@
     "index.js",
     "index.d.ts",
     "types.d.ts",
+    "types.ts",
     "types.js"
   ],
   "keywords": [
