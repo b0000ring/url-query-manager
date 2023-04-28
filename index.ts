@@ -8,7 +8,7 @@ const modules: Dictionary<Module> = {};
   A class for manipulating URL parameters from different modules
 */
 export class UrlQueryManager {
-  _name = '';
+  protected  _name = '';
 
   /*
     Returns all params from all modules (with applied prefix if module has it)
@@ -76,7 +76,7 @@ export class UrlQueryManager {
   }
 
   /*
-    Checks for availability of specific param by name
+    Checks for availability (no conflict with other modules params) of specific param by name
     @param key param name to check
   */
   @checkAvailability
@@ -124,7 +124,7 @@ export class UrlQueryManager {
   }
 
   /*
-    Destroying module (removing all the params and prevents from future updates)
+    Destroying module (removing all the module params and prevents from future updates)
   */
   destroy() {
     delete modules[this.name];
