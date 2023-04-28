@@ -1,11 +1,11 @@
-#URL-QUERY-MANAGER
+# URL-QUERY-MANAGER
 
 An npm package that provides a safe and efficient solution for manipulating URL query parameters from different app modules separately.
 Designed to prevent query parameter conflicts and ensure the integrity of your data. Allows to easily add, update, or remove query parameters without worrying about unexpected results or unintended consequences.
 
 **url-query-manager** built with a focus on safety and security, making it a reliable choice for any project that requires URL query parameter manipulation. With its intuitive API, it is easy to use and can be integrated seamlessly into your existing codebase.
 
-##Features:
+## Features:
 
 - Safe manipulation of URL query parameters from different app modules
 - Prevention of query parameter conflicts (automatically applyed prefix)
