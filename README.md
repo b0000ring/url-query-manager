@@ -8,7 +8,7 @@ Designed to prevent query parameter conflicts and ensure the integrity of your d
 ## Features:
 
 - Safe manipulation of URL query parameters from different app modules
-- Prevention of query parameter conflicts (automatically applyed prefix)
+- Prevention of query parameter conflicts (automatically applied prefix)
 - Efficient addition, update, or removal of query parameters
 - Intuitive and easy-to-use API
 
@@ -67,6 +67,12 @@ UrlQueryManager.getQueryString();
 `.getQueryParams()` - Returns params applied to the module
 
 `.destroy()` - Destroying module (removing all the module params and prevents from future updates)
+
+### UrlQueryManager instance properties
+
+`.name {string}` - module name
+
+`.deleted {boolean}` - returns true if the module was destroyed (by `.destroy()` method)
 
 
 
