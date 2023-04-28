@@ -1,6 +1,6 @@
 {
   "name": "url-query-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helper for managing url params from different application modules separately and safe",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,11 @@
     "modules",
     "manager"
   ],
-  "author": "Alex Chirkin",
+  "repository": "https://github.com/b0000ring/url-query-manager",
+  "author": {
+		"name": "Alex Chirkin",
+		"email": "hello@alexchirkin.me"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.0",
