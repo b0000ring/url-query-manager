@@ -30,7 +30,7 @@ import UrlQueryManager from 'url-query-manager';
 // create a manager object for the module
 const module = new UrlQueryManager('page');
 // push some params
-module.push({page: 'home'});
+module.push({page_id: 'home'});
 // apply params to URL...
 UrlQueryManager.applyQuery();
 // ...OR get the query to apply with any other way (some custom router for example)
@@ -41,6 +41,7 @@ UrlQueryManager.getQueryString();
 
 ### UrlQueryManager constructor params
 `name` {string} represents module name
+
 `usePrefix` {boolean} if true, the module name will be applied as a prefix to module parameters with an underscore (name: page; params: id; -> page_id)
 
 ### UrlQueryManager static methods
@@ -56,9 +57,11 @@ UrlQueryManager.getQueryString();
 ### UrlQueryManager instance methods
 
 `.isParamAvailable(key)` - Checks for availability (no conflict with other modules params) of specific param by name
+
 **key** - param key
 
 `.push(params)` - Pushes params to module params collection (overwrites all previous params in the module)
+
 **params** - object with query params where key is param name, and value is param value
 
 `.getQueryParams()` - Returns params applied to the module
