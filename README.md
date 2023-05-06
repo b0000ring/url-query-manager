@@ -37,6 +37,9 @@ UrlQueryManager.applyQuery();
 UrlQueryManager.getQueryString();
 ```
 
+`examples` folder contains some simple apps that uses this package
+To see it in action go to the specific example folder, install deps with `npm i`, run the app `npm run start`
+
 ## API
 
 ### UrlQueryManager constructor params

@@ -1,6 +1,6 @@
 {
   "name": "url-query-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Helper for managing url params from different application modules separately and safe",
   "main": "index.js",
   "scripts": {
