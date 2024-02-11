@@ -43,46 +43,33 @@ To see it in action go to the specific example folder, install deps with `npm i`
 ## API
 
 ### UrlQueryManager constructor params
-`name` {string} represents module name
-
-`usePrefix` {boolean} if true, the module name will be applied as a prefix to module parameters with an underscore (name: page; params: id; -> page_id)
-
-### UrlQueryManager static methods
-
-`.getAllQueryParams()` - returns all params from all modules (with applied prefix if module has it)
-
-`.getQueryString()` - returns query string with applied params from all modules (with applied prefix if module has it)
-
-`.getModulesList()` - returns list of all modules names
-
-`.applyQuery()` - applies query string through window.history.pushState
-
-### UrlQueryManager instance methods
-
-`.isParamAvailable(key)` - Checks for availability (no conflict with other modules params) of specific param by name
-
-**key** - param key
-
-`.push(params)` - Pushes params to module params collection (overwrites all previous params in the module)
-
-**params** - object with query params where key is param name, and value is param value
-
-`.getQueryParams()` - Returns params applied to the module
-
-`.destroy()` - Destroying module (removing all the module params and prevents from future updates)
+| Name                | Type     | Description                                                                                                             |
+|---------------------|----------|-------------------------------------------------------------------------------------------------------------------------|
+| **name**            | `string` | Represents module name.                                                                                                 |
+| **usePrefix**       | `boolean`| If true, the module name will be applied as a prefix to module parameters with an underscore (e.g., `name: page; params: id; -> page_id`). |
 
 ### UrlQueryManager instance properties
 
-`.name {string}` - module name
+| Name          | Type     | Description                                                                                        |
+|---------------|----------|----------------------------------------------------------------------------------------------------|
+| **name**     | `string` | Module name.                                                                                       |
+| **deleted**  | `boolean`| Returns true if the module was destroyed (by `.destroy()` method).                                 |
 
-`.deleted {boolean}` - returns true if the module was destroyed (by `.destroy()` method)
+### UrlQueryManager static methods
 
+| Name                      | Description                                                                                         |
+|---------------------------|-----------------------------------------------------------------------------------------------------|
+| **getAllQueryParams()**   | Returns all params from all modules (with applied prefix if module has it).                         |
+| **getQueryString()**      | Returns query string with applied params from all modules (with applied prefix if module has it).   |
+| **getModulesList()**      | Returns list of all modules names.                                                                 |
+| **applyQuery()**          | Applies query string through `window.history.pushState`.                                            |
 
+### UrlQueryManager instance methods
 
-
-
-
-
-
-
+| Name                     | Description                                                                                      |
+|--------------------------|--------------------------------------------------------------------------------------------------|
+| **isParamAvailable(key)**| Checks for availability (no conflict with other modules params) of specific param by name. `key` - param key. |
+| **push(params)**         | Pushes params to module params collection (overwrites all previous params in the module). `params` - object with query params where key is param name, and value is param value. |
+| **getQueryParams()**     | Returns params applied to the module.                                                           |
+| **destroy()**            | Destroying module (removing all the module params and prevents from future updates).             |
 

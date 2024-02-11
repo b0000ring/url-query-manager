@@ -2,7 +2,10 @@ import UrlQueryManager from "url-query-manager";
 import queryString from 'query-string';
 
 class AppModule {
+
   manager = null;
+  name = '';
+
   constructor(name) {
     this.manager = new UrlQueryManager(name, true);
     this.name = name;

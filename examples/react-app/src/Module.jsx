@@ -10,10 +10,12 @@ function removePrefix(name, value) {
 
 export function Module({ name }) {
   /*Putting url-query-manager instance into ref to prevent instance recreation on every render*/
-  const manager = useRef(new UrlQueryManager(name, true));
-  
+  const manager = useRef(null);
+
   /*Custom getting inital params values*/
   useEffect(() => {
+    manager.current = new UrlQueryManager(name, true);
+
     const allParams = queryString.parse(window.location.search);
     const localParams = {};
     Object.entries(allParams).forEach(param => {
